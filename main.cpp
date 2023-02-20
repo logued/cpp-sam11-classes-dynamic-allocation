@@ -1,10 +1,12 @@
-//                                  Feb 2022
+//                                  Feb 2023
 /**
  * Dynamic allocation of memory to store Class objects.
  *
  */
 #include "Rectangle.h"  // include the class definition
 #include <iostream>
+#include <memory>
+
 using namespace std;
 
 void display_using_pointer(Rectangle* );
@@ -14,7 +16,7 @@ int main() {
 
 	Rectangle rect(3, 4);		// creates automatic variable - on Stack
 
-	Rectangle* pRect;			// declare a pointer to rect
+	Rectangle* pRect;			// declare a (raw) pointer to rect
 
 	pRect = &rect;	// put pointer pRect pointing at rect object
 
@@ -26,7 +28,7 @@ int main() {
 
 	pRect = new Rectangle(5, 5);
 
-    cout<< "Dynamically Allocated Rectangle object: " << endl;
+    cout<< "Dynamically Allocated Rectangle object: area = " << endl;
 	cout << pRect->area() << endl;	// access the member function using the pointer
 
 	display_using_pointer(pRect);
@@ -35,6 +37,22 @@ int main() {
 
 	delete pRect;		// free up memory when finished with it.
 	pRect = nullptr;    // set pointer to null to prevent dangling pointer
+
+
+    // Dynamically allocate a Rectangle object and assign its address to a Smart Pointer
+
+    // https://learn.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=msvc-170#uses-for-smart-pointers
+
+
+// Create the object and pass it to a smart pointer"
+    unique_ptr<Rectangle> spRect ( new Rectangle() );  // smart pointer to Rectangle
+    cout << spRect->area() << endl;	// access member function using pointer
+
+    // we do not have to delete the Rectangle memory that the smart pointer points to
+    // as it will be deleted when the smart pointer object goes out of scope/duration
+    // because the smart pointer is stored as an object on the stack and it calls a destructor to
+    // delete the memory storing the rectangle.
+    // Read the Microsoft Learn reference shown above.
 
 
 	// TODO - draw the memory diagram

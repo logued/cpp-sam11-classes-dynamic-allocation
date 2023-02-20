@@ -13,8 +13,6 @@
 // Preprocessor directives to prevent the file Rectangle.h being included in the
 //  program more than once. Note the closing #endif at the bottom of the file.
 //
-#ifndef CPP_SAM10_CLASSES1_RECTANGLE_RECTANGLE_H
-#define CPP_SAM10_CLASSES1_RECTANGLE_RECTANGLE_H
 
 #include "Rectangle.h"      // copies in the Rectangle.h class definition
 
@@ -25,20 +23,21 @@ Rectangle::Rectangle() {     // default no-arg constructor, qualifier "::"
     height = 5;
 }
 
-Rectangle::Rectangle(int a, int b) {
-    width = a;
-    height = b;
+Rectangle::Rectangle(int width, int height) {
+    this->width = width;        // "this" is a pointer to this Rectangle object
+    this->height = height;
 }
 
 // IMPLEMENTATION of member functions of Rectangle class
 
-int Rectangle::area(void) {
+int Rectangle::area() const
+{
     return width * height;
 }
 
-int Rectangle::getWidth(void) { return width; }
+int Rectangle::getWidth() const
+{ return width; }
 
-int Rectangle::getHeight(void) { return height; }
+int Rectangle::getHeight() const
+{ return height; }
 
-
-#endif //CPP_SAM10_CLASSES1_RECTANGLE_RECTANGLE_H

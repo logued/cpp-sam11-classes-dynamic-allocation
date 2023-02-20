@@ -1,4 +1,3 @@
-#pragma once
 /**  Rectangle class definition.    Rectangle.h
  *
  * HEADER File
@@ -17,15 +16,22 @@
  * - member function definitions (with no implementation)
  */
 
+#ifndef CPP_SAM10_CLASSES1_RECTANGLE_RECTANGLE_H
+#define CPP_SAM10_CLASSES1_RECTANGLE_RECTANGLE_H
+//https://www.jetbrains.com/help/clion/header-guards.html
+
 class Rectangle
 {
-private:                    // access specifier "private"
-    int width, height;      // member data
+private:            // access specifier "private"
+    int width;      // member data
+    int height;
 public:
     Rectangle();            // no-argument constructor
     Rectangle(int, int);    // constructor
 
-    int area(void);         // function definitions (no implementation)
-    int getWidth(void);
-    int getHeight(void);
+    int area() const;         // function definitions (no implementation)
+    int getWidth() const;
+    int getHeight() const;
 };
+
+#endif
