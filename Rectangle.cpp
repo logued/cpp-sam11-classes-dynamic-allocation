@@ -1,4 +1,4 @@
-//   Rectangle class Implementation.  Rectangle.cpp     Feb 2022
+//   Rectangle class Implementation.  Rectangle.cpp     Mar 2024
 /**
  * Demonstrates:
  * Implementation of Rectangle class in this file
@@ -24,7 +24,7 @@ Rectangle::Rectangle() {     // default no-arg constructor, qualifier "::"
 }
 
 Rectangle::Rectangle(int width, int height) {
-    this->width = width;        // "this" is a pointer to this Rectangle object
+    this->width = width;        // the "this" pointer is a pointer to 'this' Rectangle object
     this->height = height;
 }
 

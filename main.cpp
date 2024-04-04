@@ -1,6 +1,13 @@
-//                                  Feb 2023
+//                                  Mar 2024
 /**
  * Dynamic allocation of memory to store Class objects.
+ * Demonstrates Dynamically Allocating an object using "new".
+ * The address of the new object is returned by "new", so we must store it in a pointer.
+ * Dynamically allocated objects are placed on the HEAP area of memory.
+ * We MUST remember to manually free them from memory when we are finished using them.
+ * We use the "->" operator to access the member function of an object using a pointer.
+ *
+ * Dynamically allocate an array of objects.
  *
  */
 #include "Rectangle.h"  // include the class definition
@@ -9,34 +16,38 @@
 
 using namespace std;
 
+// function prototypes for  passing by pointer and by reference
 void display_using_pointer(Rectangle* );
-void display_using_reference(Rectangle&);
+void display_using_reference(Rectangle &);
 
 int main() {
 
 	Rectangle rect(3, 4);		// creates automatic variable - on Stack
 
-	Rectangle* pRect;			// declare a (raw) pointer to rect
+	Rectangle* pRect1;			// declare a (raw) pointer to Rectangle
+	pRect1 = &rect;	            // put pointer pRect pointing at rect object
 
-	pRect = &rect;	// put pointer pRect pointing at rect object
-
-	cout << pRect->area() << endl;	// access member function using pointer
+	cout << pRect1->area() << endl;	// access member function using pointer
 
 	// TODO - draw the memory diagram
 
-	// Demo - DYNAMICALLY ALLOCATE a single Rectangle class object using 'new'  (on Heap)
-
-	pRect = new Rectangle(5, 5);
+	// DYNAMICALLY ALLOCATE a single Rectangle class object using 'new'  (on Heap)
+	Rectangle* pRect2 = new Rectangle(5, 5);
 
     cout<< "Dynamically Allocated Rectangle object: area = " << endl;
-	cout << pRect->area() << endl;	// access the member function using the pointer
+	cout << pRect2->area() << endl;	// access the member function using the pointer
 
-	display_using_pointer(pRect);
+    // pass the address of the Rectangle object as an argument into function.
+    // the function must have declared a pointer parameter to receive the address.
+	display_using_pointer(pRect2);
 
-	display_using_reference(*pRect);
+    // In this case the function has declared a parameter that is a reference type, so
+    // we must provide an object as an argument.  We do this by dereferencing the pRect2 pointer,
+    // which presents the object pointed to by pRect2.
+	display_using_reference(*pRect2);
 
-	delete pRect;		// free up memory when finished with it.
-	pRect = nullptr;    // set pointer to null to prevent dangling pointer
+	delete pRect2;		// free up memory when finished with it.
+	pRect2 = nullptr;    // set pointer to null to prevent dangling pointer
 
 
     // Dynamically allocate a Rectangle object and assign its address to a Smart Pointer
@@ -44,15 +55,21 @@ int main() {
     // https://learn.microsoft.com/en-us/cpp/cpp/smart-pointers-modern-cpp?view=msvc-170#uses-for-smart-pointers
 
 
-// Create the object and pass it to a smart pointer"
-    unique_ptr<Rectangle> spRect ( new Rectangle() );  // smart pointer to Rectangle
+    // Create the object and assign its address to a smart pointer.
+    // By doing this, the C++ system will take on the responsibility to free up
+    // memory occupied by the dynamically allocated Rectangle object.
+    // This is  a "Modern" C++ feature, and helps avoid memory leaks.
+    //
+    unique_ptr<Rectangle> spRect ( new Rectangle(3,3) );  // smart unique pointer to Rectangle
     cout << spRect->area() << endl;	// access member function using pointer
 
     // we do not have to delete the Rectangle memory that the smart pointer points to
-    // as it will be deleted when the smart pointer object goes out of scope/duration
-    // because the smart pointer is stored as an object on the stack and it calls a destructor to
-    // delete the memory storing the rectangle.
+    // as it will be deleted when the smart pointer object goes out of scope/duration.
+    // The smart pointer itself is stored as an object on the stack
+    // (which points at the dynamically allocated Rectangle object) and just before it is removed from the stack
+    // it will call a destructor to delete the memory allocated for the rectangle.
     // Read the Microsoft Learn reference shown above.
+    // We may explore this later in the course.
 
 
 	// TODO - draw the memory diagram
@@ -74,7 +91,8 @@ int main() {
 
 	//TODO - Draw the memory diagram of the above
 
-	// Normally we will use the vector class in C++ to store an array of Class objects.
+	// Normally we will use the vector class in C++ to store an array of Class objects
+    // as it can grow to accommodate elements as they are added.
 
 	return 0;
 }
