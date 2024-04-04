@@ -86,7 +86,7 @@ int main() {
 	//cout << "Danger - Index beyond bounds prints : area() = " << array[5].area() << endl;	// ouch - no run time error !!!!
 
 
-	delete[] rectangles;
+	delete[] rectangles;  // the "[]" is required to properly delete the allocated memory
 	rectangles = nullptr;
 
 	//TODO - Draw the memory diagram of the above
